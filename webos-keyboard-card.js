@@ -1,9 +1,9 @@
-class WebOSKeyboardCard extends HTMLElement {
+class WebOSYouTubeLinkCard extends HTMLElement {
     setConfig(config) {
 
         this.config = config;
         if (!config.target || typeof this.config.target !== "string") {
-            throw new Error('You need to define a target');
+            throw new Error('You need to paste a valid YouTube link');
         }
         this.render();
     }
@@ -16,8 +16,8 @@ class WebOSKeyboardCard extends HTMLElement {
             this.card.appendChild(this.content);
             this.appendChild(this.card);
         }
-        this.card.header = this.config.title || "Type to TV";
-        let label = this.config.label || "Text to type"
+        this.card.header = this.config.title || "Watch on YouTube";
+        let label = this.config.label || "Paste here"
         this.content.innerHTML = `
       <div style="display: flex">
         <paper-input style="flex-grow: 1" label="${label}">
@@ -25,33 +25,22 @@ class WebOSKeyboardCard extends HTMLElement {
       </div>
     `;
         this.content.querySelector("paper-input").addEventListener("value-changed", this.sendText.bind(this), false);
-        this.content.querySelector("paper-input").addEventListener("keyup", this.keyup.bind(this), false);
-    }
-
-    keyup(e) {
-        if (e.key === "Enter") {
-            this.sendEnter()
-        }
     }
 
     sendText() {
         let txt = this.content.querySelector("paper-input").value;
+        if ( txt.startsWith("https://youtu.be/")) {
+            txt = txt.replace("https://youtu.be/", "v=")
+        }
         this.hass.callService("webostv", "command", {
             entity_id: this.config.target,
-            command: "com.webos.service.ime/insertText",
+            command: "system.launcher/launch",
             payload: {
-                text: txt,
-                replace: true,
+                id: "youtube.leanback.v4",
+                contentId: txt,
             },
-        });
-    }
-
-    sendEnter() {
-        this.hass.callService("webostv", "command", {
-            entity_id: this.config.target,
-            command: "com.webos.service.ime/sendEnterKey",
         });
     }
 }
 
-customElements.define('webos-keyboard-card', WebOSKeyboardCard);
+customElements.define('webos-youtube-link-card', WebOSYouTubeLinkCard);
