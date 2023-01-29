@@ -1,6 +1,6 @@
 # WebOS YouTube Link Card for Lovelace/Home Assistant
 
-This simple card allows you to use your phone or PC keyboard to paste a YouTube link aand watch it on your LG WebOS TV.
+This simple card allows you to use your phone or PC to paste a YouTube link and watch it on your LG WebOS TV.
 
 The native [Home Assistant WebOS Integration](https://www.home-assistant.io/integrations/webostv/) is required.
 
