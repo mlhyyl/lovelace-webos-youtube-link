@@ -40,6 +40,7 @@ class WebOSYouTubeLinkCard extends HTMLElement {
                 contentId: txt,
             },
         });
+        this.content.querySelector("paper-input").value = "";
     }
 }
 
