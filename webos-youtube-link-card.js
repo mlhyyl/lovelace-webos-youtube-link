@@ -28,19 +28,22 @@ class WebOSYouTubeLinkCard extends HTMLElement {
     }
 
     sendText() {
-        let txt = this.content.querySelector("paper-input").value;
-        if ( txt.startsWith("https://youtu.be/")) {
-            txt = txt.replace("https://youtu.be/", "v=")
+        let txt = this.content.querySelector("paper-input").value;        
+        if ( txt == "") {
+            
         }
-        this.hass.callService("webostv", "command", {
-            entity_id: this.config.target,
-            command: "system.launcher/launch",
-            payload: {
-                id: "youtube.leanback.v4",
-                contentId: txt,
-            },
-        });
-        this.content.querySelector("paper-input").value = "";
+        else if ( txt.startsWith("https://youtu.be/")) {
+            txt = txt.replace("https://youtu.be/", "v=")
+            this.hass.callService("webostv", "command", {
+                entity_id: this.config.target,
+                command: "system.launcher/launch",
+                payload: {
+                    id: "youtube.leanback.v4",
+                    contentId: txt,
+                },
+            });
+            this.content.querySelector("paper-input").value = "";
+        }
     }
 }
 
