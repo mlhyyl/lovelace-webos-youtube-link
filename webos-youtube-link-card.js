@@ -30,7 +30,7 @@ class WebOSYouTubeLinkCard extends HTMLElement {
     sendText() {
         let txt = this.content.querySelector("paper-input").value;        
         if ( txt == "") {
-            
+            return
         }
         else if ( txt.startsWith("https://youtu.be/")) {
             txt = txt.replace("https://youtu.be/", "v=")
