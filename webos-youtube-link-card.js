@@ -44,6 +44,20 @@ class WebOSYouTubeLinkCard extends HTMLElement {
             });
             this.content.querySelector("paper-input").value = "";
         }
+        else if ( txt.startsWith("https://www.youtube.com/") ) {
+            txt = txt.replace("https://www.youtube.com//watch?", "")
+            
+            this.hass.callService("webostv", "command", {
+                entity_id: this.config.target,
+                command: "system.launcher/launch",
+                payload: {
+                    id: "youtube.leanback.v4",
+                    contentId: txt,
+                },
+            });
+            this.content.querySelector("paper-input").value = "";
+            console.log("Link submitted")
+        }
     }
 }
 
