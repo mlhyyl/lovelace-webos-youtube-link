@@ -34,6 +34,8 @@ class WebOSYouTubeLinkCard extends HTMLElement {
         }
         else if ( txt.startsWith("https://youtu.be/")) {
             txt = txt.replace("https://youtu.be/", "v=")
+            txt = txt.substring(0, txt.lastIndexOf('?t='))
+            
             this.hass.callService("webostv", "command", {
                 entity_id: this.config.target,
                 command: "system.launcher/launch",
@@ -46,6 +48,7 @@ class WebOSYouTubeLinkCard extends HTMLElement {
         }
         else if ( txt.startsWith("https://www.youtube.com/") ) {
             txt = txt.replace("https://www.youtube.com//watch?", "")
+            txt = txt.substring(0, txt.lastIndexOf('?t='))
             
             this.hass.callService("webostv", "command", {
                 entity_id: this.config.target,
